@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  .container
+    h2.has-text-weight-bold.is-capitalized
+    .has-text-centered.is-size-3= heading
+    .field
+      .control
+        label.label username
+      .control
+        input.input(type="text")
+    .field
+      .control
+        label.label password
+      .control
+        input.input(type="password")

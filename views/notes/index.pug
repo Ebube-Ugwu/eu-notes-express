@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  .container
+    h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3= heading
+    each note in notes
+      .box
+        header.has-text-weight-bold.is-capitalized.is-size-4= note.title
+        p= note.body
+    .container
+      button.button.is-link.is-capitalized#create-note-button Add a new note
+  .container.collapsible.collapsed
+    form.box.collapsible__item#note_form(action="/notes", method="POST")
+      h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3.is-capitalized add a new note
+      .field
+        .control
+          input.input(type="text", placeholder="title")
+      .field
+        .control
+          textarea.textarea(placeholder="type your note here..")
+      .is-flex.is-justify-content-center
+        button.button.is-success.is-capitalized(type="submit") add note

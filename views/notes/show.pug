@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  form.box.collapsible__item#note_form
+    h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3.is-capitalized add a new note
+    .field
+      .control
+        input.input(type="text", placeholder="title")
+    .field
+      .control
+        textarea.textarea(placeholder="type your note here..")
+    .is-flex.is-justify-content-space-between
+      button.button.is-danger.is-capitalized(type="submit") delete
+      button.button.is-warning.is-capitalized(type="submit") edit
