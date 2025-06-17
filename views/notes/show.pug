@@ -1,17 +1,13 @@
 extends ../layout
 
 block content
-  form.box.collapsible__item(action="/notes/2", method="POST")
-    input(type="hidden", name="_method", value="PUT")
-    h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3.is-capitalized add a new note
-    .field
-      .control
-        input.input(type="text", placeholder="title")
-    .field
-      .control
-        textarea.textarea(placeholder="type your note here..")
+  .box
+    h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3.is-capitalized= note.title
+    p.is-size-4= note.body
     .is-flex.is-justify-content-space-between
-      button.button.is-danger.is-capitalized(onclick="document.querySelector(#delete-form).submit()") delete
-      button.button.is-warning.is-capitalized(type="submit") edit
-  form.is-invisible(id="delete-form", action="/notes/2", method="POST")
+      button.button.is-danger.is-capitalized(onclick="document.querySelector('#delete-form').submit()") delete
+      button.button.is-warning.is-capitalized(onclick="document.querySelector('#edit-form').submit()") edit
+  form.is-invisible(id="delete-form", action="/notes/" + note.id, method="POST")
     input(type="hidden", name="_method", value="DELETE")
+  form.is-invisible(id="edit-form" action="/notes/" + note.id, method="POST")
+    input(type="hidden", name="_method", value="PUT")

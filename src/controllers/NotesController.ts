@@ -1,5 +1,18 @@
 import { Request, Response } from "express";
+import _ from "lodash";
 // import { Note } from "../models/Note";
+
+
+type Note = {
+  id: number,
+  title: string,
+  body: string
+}
+const notes: Note[] = [
+  { id: 1, title: "first note", body: "first note" },
+  { id: 2, title: "second note", body: "second note" },
+  { id: 3, title: "third note", body: "third note" },
+];
 
 export default class NotesController {
 
@@ -7,25 +20,21 @@ export default class NotesController {
     // const notes = await Note.find();
     res.render("notes/index", {
       heading: "All notes",
-      notes: [
-        { title: "first note", body: "first note" },
-        { title: "second note", body: "second note" },
-        { title: "third note", body: "third note" },
-      ]
+      notes: notes
     });
   }
 
   static async show(req: Request, res: Response) {
     // const notes = await Note.find();
-    res.render("notes/show", { heading: "note" });
+    const id: number = parseInt(req.params.id);
+    const note: Note = _.filter(notes, note => note.id === id)[0];
+    res.render("notes/show", { note: note });
   }
 
-  static create(req: Request, res: Response) {
-    res.render("notes/create", { heading: "new note" });
-  }
+
 
   static update(req: Request, res: Response) {
-    res.render("notes/edit", { heading: "edit" });
+    res.send("Update Note...")
   }
 
   static destroy(req: Request, res: Response) {

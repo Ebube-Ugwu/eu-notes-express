@@ -6,10 +6,12 @@ import middleware from "./middlewares"
 
 const app = express();
 
-app.set("port", process.env.PORT || 3000);
-
 // Middleware
 middleware(app);
+
+// Port
+app.set("port", process.env.PORT || 3000);
+
 
 //Views
 app.set("view engine", "pug");
