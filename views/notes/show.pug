@@ -5,8 +5,31 @@ block content
     h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3.is-capitalized= note.title
     p.is-size-4= note.body
     .is-flex.is-justify-content-space-between
-      button.button.is-danger.is-capitalized(onclick="document.querySelector('#delete-form').submit()") delete
-      button.button.is-warning.is-capitalized(onclick="document.querySelector('#edit-form').submit()") edit
+      button.button.is-danger.is-capitalized.delete-modal-trigger delete
+      button.button.is-warning.is-capitalized.modal-trigger edit
+
+  .modal.delete-modal
+    .modal-background
+    .modal-content.is-flex.is-justify-content-center.is-flex-direction-column.is-align-items-center.animate__animated__bounce
+      p.has-text-weight-bold Delete this note?
+      .buttons
+        button.button.is-danger(onclick="document.querySelector('#delete-form').submit()") Delete
+        button.button.modal-cancel Cancel
+
+  .modal
+    .modal-background
+    .modal-card.container.p-4
+      .field
+        .control
+          input.input.modal-card-title(type="text", value="" + note.title )
+      .field
+        .control
+          textarea.textarea.modal-card-body(rows="8",type="text", value="" + note.body )
+      footer.modal-card-foot
+        .buttons
+          button.button.is-success(onclick="document.querySelector('#edit-form').submit()") Save changes
+          button.button.modal-cancel Cancel
+
   form.is-invisible(id="delete-form", action="/notes/" + note.id, method="POST")
     input(type="hidden", name="_method", value="DELETE")
   form.is-invisible(id="edit-form" action="/notes/" + note.id, method="POST")

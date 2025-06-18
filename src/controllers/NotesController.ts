@@ -34,10 +34,13 @@ export default class NotesController {
 
 
   static update(req: Request, res: Response) {
-    res.send("Update Note...")
+    const id: number = parseInt(req.params.id);
+    const note: Note = _.filter(notes, note => note.id === id)[0];
+    res.render("notes/show", { note: note });
   }
 
   static destroy(req: Request, res: Response) {
-    res.send("Destroy Note...")
+    // Delete note
+    res.redirect("/notes");
   }
 }
