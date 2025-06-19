@@ -18,19 +18,18 @@ block content
 
   .modal
     .modal-background
-    .modal-card.container.p-4
+    form.modal-card.container.p-4(action="/notes/" + note._id, method="POST")
+      input(type="hidden", name="_method", value="PUT")
       .field
         .control
-          input.input.modal-card-title(type="text", value="" + note.title )
+          input.input.modal-card-title(name="title", type="text", value="" + note.title )
       .field
         .control
-          textarea.textarea.modal-card-body(rows="8",type="text", value="" + note.body )
+          textarea.textarea.modal-card-body(name="body", rows="8",type="text")= note.body
       footer.modal-card-foot
         .buttons
-          button.button.is-success(onclick="document.querySelector('#edit-form').submit()") Save changes
-          button.button.modal-cancel Cancel
+          button.button.is-success(type="submit") Save changes
+          .button.modal-cancel Cancel
 
-  form.is-invisible(id="delete-form", action="/notes/" + note.id, method="POST")
+  form.is-invisible(id="delete-form", action="/notes/" + note._id, method="POST")
     input(type="hidden", name="_method", value="DELETE")
-  form.is-invisible(id="edit-form" action="/notes/" + note.id, method="POST")
-    input(type="hidden", name="_method", value="PUT")

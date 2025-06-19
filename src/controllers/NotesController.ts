@@ -1,46 +1,47 @@
 import { Request, Response } from "express";
 import _ from "lodash";
-// import { Note } from "../models/Note";
+import { Note } from "../models/Note";
 
-
-type Note = {
-  id: number,
-  title: string,
-  body: string
-}
-const notes: Note[] = [
-  { id: 1, title: "first note", body: "first note" },
-  { id: 2, title: "second note", body: "second note" },
-  { id: 3, title: "third note", body: "third note" },
-];
 
 export default class NotesController {
 
   static async index(req: Request, res: Response) {
-    // const notes = await Note.find();
+    const notes = await Note.find();
     res.render("notes/index", {
       heading: "All notes",
       notes: notes
     });
   }
 
+  static async store(req: Request, res: Response) {
+    let note = new Note({
+      title: req.body.title,
+      body: req.body.body
+    });
+    note = await note.save();
+    res.redirect("/notes");
+  }
+
   static async show(req: Request, res: Response) {
-    // const notes = await Note.find();
-    const id: number = parseInt(req.params.id);
-    const note: Note = _.filter(notes, note => note.id === id)[0];
+    const note = await Note.findById(req.params.id);
     res.render("notes/show", { note: note });
   }
 
+  static async update(req: Request, res: Response) {
+    const note = await Note.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        body: req.body.body,
+      },
+      { new: true }
+    );
 
-
-  static update(req: Request, res: Response) {
-    const id: number = parseInt(req.params.id);
-    const note: Note = _.filter(notes, note => note.id === id)[0];
-    res.render("notes/show", { note: note });
+    return res.redirect("/notes/" + note?._id);
   }
 
-  static destroy(req: Request, res: Response) {
-    // Delete note
+  static async destroy(req: Request, res: Response) {
+    await Note.findByIdAndDelete(req.params.id);
     res.redirect("/notes");
   }
 }

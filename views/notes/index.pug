@@ -4,7 +4,7 @@ block content
   .container
     h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3= heading
     each note in notes
-      a.box(href="/notes/" + note.id)
+      a.box(href="/notes/" + note._id)
         header.has-text-weight-bold.is-capitalized.is-size-4= note.title
         p= note.body
     .container
@@ -14,9 +14,9 @@ block content
       h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3.is-capitalized add a new note
       .field
         .control
-          input.input(type="text", placeholder="title")
+          input.input(name="title",type="text", placeholder="title")
       .field
         .control
-          textarea.textarea(placeholder="type your note here..")
+          textarea.textarea(name="title",placeholder="type your note here..")
       .is-flex.is-justify-content-center
         button.button.is-success.is-capitalized(type="submit") add note
