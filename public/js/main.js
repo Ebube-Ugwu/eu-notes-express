@@ -4,19 +4,19 @@ function showCreateNoteForm() {
   const noteForm = document.querySelector("#note_form");
   createNoteButton?.addEventListener("click",
     (e) => {
-      toggle(".collapsible");
+      toggle(".collapsible", "collapsed");
       noteForm?.scrollIntoView();
       createNoteButton.classList.toggle("is-invisible");
     })
 }
 
 
-function toggle(className) {
+function toggle(className, targetClass = "is-active") {
   const elements = document.
     querySelectorAll(className);
   elements?.forEach(
     element => {
-      element.classList.toggle("is-active");
+      element.classList.toggle(targetClass);
     }
   );
 }
@@ -42,11 +42,15 @@ function showModals() {
 
 function hideModals() {
   const modalCloseButton = document.
-    querySelector(".modal-cancel");
-  modalCloseButton?.addEventListener("click",
-    (e) => {
-      disable(".modal");
-    })
+    querySelectorAll(".modal-cancel");
+  modalCloseButton?.forEach(
+    (el) => {
+      el.addEventListener("click",
+        (e) => {
+          disable(".modal");
+        })
+    }
+  );
 }
 
 function showDeleteModal() {
@@ -58,10 +62,22 @@ function showDeleteModal() {
     });
 }
 
+function toggleMenu() {
+  const navbarBurger = document.
+    querySelector(".navbar-burger");
+  navbarBurger?.addEventListener("click",
+    (e) => {
+      toggle(".navbar-menu");
+      toggle(".navbar-burger");
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  hideModals();
   showCreateNoteForm();
   showDeleteModal();
   showModals();
-  hideModals();
+  toggleMenu();
 
 })
