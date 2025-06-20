@@ -1,0 +1,8 @@
+if notifications
+  each notification in notifications
+    case notification.category
+      when 'success'
+        .notification.is-primary.animate__animated.animate__bounceIn.is-fixed-top
+          button.delete
+          strong.is-capitalized success
+          p= notification.message

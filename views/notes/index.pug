@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+  include ../partials/notification
   .container
     h2.has-text-weight-bold.is-capitalized.has-text-centered.is-size-3= heading
     each note in notes
@@ -17,6 +18,6 @@ block content
           input.input(name="title",type="text", placeholder="title")
       .field
         .control
-          textarea.textarea(name="title",placeholder="type your note here..")
+          textarea.textarea(name="title",rows="8",placeholder="type your note here..")
       .is-flex.is-justify-content-center
         button.button.is-success.is-capitalized(type="submit") add note

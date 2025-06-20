@@ -1,22 +1,9 @@
-function showCreateNoteForm() {
-  const createNoteButton = document.
-    querySelector("#create-note-button");
-  const noteForm = document.querySelector("#note_form");
-  createNoteButton?.addEventListener("click",
-    (e) => {
-      toggle(".collapsible", "collapsed");
-      noteForm?.scrollIntoView();
-      createNoteButton.classList.toggle("is-invisible");
-    })
-}
-
-
-function toggle(className, targetClass = "is-active") {
+function addEventToElements(el, className, func) {
   const elements = document.
-    querySelectorAll(className);
+    querySelectorAll(el);
   elements?.forEach(
-    element => {
-      element.classList.toggle(targetClass);
+    (element) => {
+      func(className);
     }
   );
 }
@@ -31,6 +18,27 @@ function disable(className) {
   );
 }
 
+function focusNavbar() {
+  document.
+    querySelector(".navbar")
+    .scrollIntoView({
+      block: 'start',
+      behavior: 'smooth'
+    });
+}
+
+function showCreateNoteForm() {
+  const createNoteButton = document.
+    querySelector("#create-note-button");
+  const noteForm = document.querySelector("#note_form");
+  createNoteButton?.addEventListener("click",
+    (e) => {
+      toggle(".collapsible", "collapsed");
+      noteForm?.scrollIntoView();
+      createNoteButton.classList.toggle("is-invisible");
+    })
+}
+
 function showModals() {
   const modalTrigger = document.
     querySelector(".modal-trigger");
@@ -39,6 +47,17 @@ function showModals() {
       toggle(".modal");
     })
 }
+
+function toggle(className, targetClass = "is-active") {
+  const elements = document.
+    querySelectorAll(className);
+  elements?.forEach(
+    element => {
+      element.classList.toggle(targetClass);
+    }
+  );
+}
+
 
 function hideModals() {
   const modalCloseButton = document.
@@ -72,12 +91,29 @@ function toggleMenu() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function closeNotification() {
+  (document
+    .querySelectorAll(
+      ".notification .delete") || [])
+    .forEach(($delete) => {
+      const $notification = $delete.parentNode;
 
-  hideModals();
-  showCreateNoteForm();
-  showDeleteModal();
-  showModals();
-  toggleMenu();
+      $delete.addEventListener("click",
+        () => {
+          $notification?.parentNode?.removeChild($notification);
+        }
+      );
+    });
+  focusNavbar();
+}
 
-})
+document.addEventListener(
+  'DOMContentLoaded', () => {
+    focusNavbar();
+    closeNotification();
+    hideModals();
+    showCreateNoteForm();
+    showDeleteModal();
+    showModals();
+    toggleMenu();
+  })
